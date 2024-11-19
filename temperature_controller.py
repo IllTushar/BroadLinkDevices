@@ -1,12 +1,15 @@
 import broadlink as bl
-from typing import List
-from temp_model import Model  # Assuming Model is a class that contains device details
+from datetime import datetime
+import schedule
+import time
+
 '''
 When you connect broadlink device then disable the lock info from the broadlink app
 otherwise auth issue occurs 
 '''
-if __name__ == "__main__":
-    # Discover Broadlink devices on the network
+
+def fetch_data_from_broadlink_devices():
+    
     devices = bl.discover(timeout=5)
 
     if not devices:
@@ -49,8 +52,10 @@ if __name__ == "__main__":
                 data = device.check_sensors()  # Ensure your device supports this function
                 temperature = data.get("temperature", "N/A")
                 humidity = data.get("humidity", "N/A")
+                current_date = datetime.now().strftime("%d-%b-%Y %I:%M:%S %p")
                 print(f"Temperature: {temperature}°C")
                 print(f"Humidity: {humidity}%")
+                print(f'current_date: {current_date}')
             except AttributeError:
                 print("This device does not support sensor data.")
             except Exception as e:
@@ -58,3 +63,13 @@ if __name__ == "__main__":
 
         except Exception as e:
             print(f"Error initializing device: {e}")
+
+
+if __name__ == "__main__":
+    # Schedule the task to run every 60 minutes
+    schedule.every(60).minutes.do(fetch_data_from_broadlink_devices)
+
+    while True:
+        schedule.run_pending()
+        time.sleep(1)
+
