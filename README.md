@@ -1,5 +1,5 @@
 # Project Objective
-Connect the BroadLink with Python and Get Room Temprature
+Efficiently Connect to BroadLink Devices Using Python to Retrieve Room Temperature
 
 ## Requirement
    - pip install -r requirement.txt
