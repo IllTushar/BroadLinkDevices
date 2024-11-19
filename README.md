@@ -1,4 +1,4 @@
-# Project Name
+# Project Objective
 Connect the BroadLink with Python and Get Room Temprature
 
 ## Requirement
